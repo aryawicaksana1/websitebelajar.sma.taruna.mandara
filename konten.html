@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Komponen Kartu</title>
+    <!-- Memuat Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Memuat Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Menggunakan font Inter sebagai default */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Kontainer utama untuk kartu -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden max-w-2xl w-full">
+        <!-- Bagian gambar atas -->
+        <div class="w-full h-64 bg-cover bg-center" style="background-image: url('https://placehold.co/800x400/a3e635/ffffff?text=Gambar+Header')">
+            <!-- Gambar anak laki-laki membaca buku -->
+            <img src="https://images.unsplash.com/photo-1543465077-5338d5a21a3a?q=80&w=2070&auto=format&fit=crop" 
+                 alt="Seorang anak laki-laki sedang fokus membaca buku dibantu oleh seorang dewasa di sampingnya" 
+                 class="w-full h-full object-cover"
+                 onerror="this.onerror=null;this.src='https://placehold.co/800x400/cccccc/ffffff?text=Gagal+Memuat+Gambar';">
+        </div>
+
+        <!-- Konten kartu -->
+        <div class="p-6 md:p-8">
+            <!-- Bagian Header Profil -->
+            <div class="flex justify-between items-start mb-6">
+                <div class="flex items-center space-x-4">
+                    <!-- Foto Profil -->
+                    <div class="relative">
+                        <img class="w-16 h-16 rounded-full border-2 border-white shadow-md" 
+                             src="https://placehold.co/100x100/7f9cf5/ffffff?text=Foto" 
+                             alt="Foto profil A.A Gede Prabu Panji"
+                             onerror="this.onerror=null;this.src='https://placehold.co/100x100/cccccc/ffffff?text=Error';">
+                    </div>
+                    <!-- Nama dan Angkatan -->
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">A.A Gede Prabu Panji</h1>
+                        <p class="text-sm text-gray-500">Angkatan Sad Pradana</p>
+                    </div>
+                </div>
+                <!-- Logo Materi -->
+                <div class="flex items-center space-x-2">
+                    <span class="text-lg font-semibold text-gray-700">  Materi</span>
+                    <!-- Logo Google Drive (SVG) -->
+                    <svg class="w-8 h-8" viewBox="0 0 48 48" xmlns="">
+                        <path d="M34.4 34.4L31 40.4L16.8 16.8L20.2 10.8L34.4 34.4Z" fill="#34A853"/>
+                        <path d="M13.6 34.4L17 40.4L40.4 20.2L37 14.2L13.6 34.4Z" fill="#188038"/>
+                        <path d="M7.6 20.2L14.2 8.8L25.4 27.4L18.8 38.8L7.6 20.2Z" fill="#FFC107"/>
+                        <path d="M40.4 20.2L29.2 1.6L16.8 16.8L20.2 22.8L40.4 20.2Z" fill="#4285F4"/>
+                        <path d="M29.2 46.4L41.6 27.2L37 14.2L24.6 33.4L29.2 46.4Z" fill="#1967D2"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Paragraf Konten -->
+            <div class="text-gray-600 leading-relaxed">
+                <p>
+                    Literasi sangat penting karena tidak hanya membantu seseorang dalam membaca dan menulis, tetapi juga mengasah kemampuan berpikir kritis, menambah wawasan, serta meningkatkan keterampilan komunikasi. Dengan literasi yang baik, kita mampu memahami dan memilah informasi dengan tepat, sehingga terhindar dari hoaks, mampu menyelesaikan masalah, serta dapat beradaptasi di era digital yang penuh tantangan. Literasi juga mendukung prestasi akademik, mendorong kreativitas, dan membuka peluang untuk berinovasi dalam berbagai aspek kehidupan.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

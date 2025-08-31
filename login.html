@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Login Keren</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e5e7eb;
+        }
+        .login-card {
+            background: #ffffff;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-gray-200 min-h-screen flex items-center justify-center p-4 sm:p-8">
+
+    <div class="login-card w-full max-w-xl rounded-3xl shadow-2xl p-6 sm:p-10 transform transition-all duration-300 scale-100">
+        <!-- Logo atau Icon -->
+        <div class="flex justify-center mb-6">
+            <svg id="lock-icon" xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-blue-600 transition-colors duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path id="lock-path" stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+        </div>
+        
+        <h2 class="text-center text-4xl font-bold text-gray-800 mb-2">Selamat Datang</h2>
+        <p class="text-center text-gray-500 mb-8">Silakan masuk untuk melanjutkan</p>
+
+        <!-- Pesan Status -->
+        <div id="status-message" class="hidden text-center p-4 mb-6 rounded-lg font-semibold transition-all duration-300 transform scale-95 opacity-0"></div>
+
+        <form id="login-form">
+            <div class="mb-5">
+                <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200" placeholder="nama@contoh.com" required>
+            </div>
+            <div class="mb-5">
+                <label for="password" class="block text-gray-700 font-medium mb-2">Kata Sandi</label>
+                <input type="password" id="password" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200" placeholder="••••••••" required>
+            </div>
+            <div class="flex justify-between items-center mb-6">
+                <a href="#" class="text-sm text-blue-600 hover:underline transition-colors duration-200">Lupa kata sandi?</a>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl">
+                Masuk
+            </button>
+        </form>
+
+        <div class="relative flex items-center justify-center my-8">
+            <span class="bg-white px-2 text-gray-400">Atau masuk dengan</span>
+            <hr class="absolute w-full border-t border-gray-300 z-[-1]">
+        </div>
+
+        <div class="flex gap-4">
+            <!-- Tombol Google diubah menjadi tautan -->
+            <a href="https://accounts.google.com" target="_blank" class="flex-1 flex items-center justify-center gap-2 bg-gray-100 text-gray-800 py-3 rounded-xl hover:bg-gray-200 transition-colors duration-200 shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 48 48">
+                    <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,8,3.029l5.421-5.421C35.59,4.42,30.479,2,24,2C11.85,2,2,11.85,2,24s9.85,22,22,22s22-9.85,22-22C46,19.231,44.595,18.243,43.611,20.083z"/>
+                    <path fill="#FF3D00" d="M6.306,14.691l6.096,3.753C14.015,14.943,18.008,12,24,12c3.059,0,5.842,1.154,8,3.029l5.421-5.421C35.59,4.42,30.479,2,24,2C11.85,2,2,11.85,2,24s9.85,22,22,22s22-9.85,22-22C46,19.231,44.595,18.243,43.611,20.083z"/>
+                    <path fill="#4CAF50" d="M6.306,14.691l6.096,3.753C14.015,14.943,18.008,12,24,12c3.059,0,5.842,1.154,8,3.029l5.421-5.421C35.59,4.42,30.479,2,24,2C11.85,2,2,11.85,2,24s9.85,22,22,22s22-9.85,22-22C46,19.231,44.595,18.243,43.611,20.083z"/>
+                    <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,8,3.029l5.421-5.421C35.59,4.42,30.479,2,24,2C11.85,2,2,11.85,2,24s9.85,22,22,22s22-9.85,22-22C46,19.231,44.595,18.243,43.611,20.083z"/>
+                </svg>
+                Google
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const emailInput = document.getElementById('email').value;
+            const passwordInput = document.getElementById('password').value;
+            const statusMessage = document.getElementById('status-message');
+
+            if (emailInput && passwordInput) {
+                // Skenario dummy: Login berhasil
+                statusMessage.textContent = 'Login Berhasil! Mengarahkan Anda...';
+                statusMessage.className = 'text-green-700 bg-green-100 text-center p-4 mb-6 rounded-lg font-semibold transition-all duration-300 transform scale-100 opacity-100';
+
+                // Ganti ikon gembok menjadi terbuka dan ubah warnanya
+                const lockIcon = document.getElementById('lock-icon');
+                const lockPath = document.getElementById('lock-path');
+                
+                // Path untuk gembok terbuka
+                const openLockPath = 'M8 11V7a4 4 0 118 0v4m-6 4h14a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2v-6a2 2 0 012-2z';
+                
+                lockPath.setAttribute('d', openLockPath);
+                lockIcon.classList.remove('text-blue-600');
+                lockIcon.classList.add('text-green-600'); // Mengubah warna menjadi hijau untuk indikator sukses
+
+                // Redirect ke halaman index.html setelah 1.5 detik
+                setTimeout(() => {
+                    window.location.href = './index.html';
+                }, 1500);
+            } else {
+                // Skenario dummy: Login gagal
+                statusMessage.textContent = 'Email dan kata sandi tidak boleh kosong.';
+                statusMessage.className = 'text-red-700 bg-red-100 text-center p-4 mb-6 rounded-lg font-semibold transition-all duration-300 transform scale-100 opacity-100';
+            }
+        });
+    </script>
+
+</body>
+</html>

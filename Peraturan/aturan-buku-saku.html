@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aturan Sekolah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md py-6">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
+                Aturan Sekolah
+            </h1>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6">
+                    <li><a href="#disiplin" class="text-gray-600 hover:text-blue-600 transition duration-300">Disiplin</a></li>
+                    <li><a href="#akademik" class="text-gray-600 hover:text-blue-600 transition duration-300">Akademik</a></li>
+                    <li><a href="#Buku-saku" class="block text-gray-600 hover:text-blue-600 transition duration-300">Buku Saku</a></li>
+                    <li><a href="#pertiwi" class="block text-gray-600 hover:text-blue-600 transition duration-300">Pertiwi</a></li>
+                    <li><a href="#Asrama" class="block text-gray-600 hover:text-blue-600 transition duration-300">Asrama</a></li>
+                </ul>
+            </nav>
+            <!-- Tombol untuk menu mobile -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-600 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu (Hidden by default) -->
+    <div id="mobile-menu" class="md:hidden bg-white shadow-lg py-4 px-4 hidden">
+        <ul class="space-y-4">
+            <li><a href="#disiplin" class="block text-gray-600 hover:text-blue-600 transition duration-300 border-b pb-2">Disiplin</a></li>
+            <li><a href="#akademik" class="block text-gray-600 hover:text-blue-600 transition duration-300">Akademik</a></li>
+            <li><a href="#Buku-saku" class="block text-gray-600 hover:text-blue-600 transition duration-300">Buku Saku</a></li>
+            <li><a href="#pertiwi" class="block text-gray-600 hover:text-blue-600 transition duration-300">Pertiwi</a></li>
+            <li><a href="#Asrama" class="block text-gray-600 hover:text-blue-600 transition duration-300">Asrama</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+
+        <!-- Bagian Asrama -->
+        <section id="Asrama" class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 pb-2">Aturan Asrama</h2>
+            <ul class="list-disc list-inside space-y-2 text-gray-600">
+                <li>Siswa wajib hadir di sekolah paling lambat 10 menit sebelum jam pelajaran dimulai.</li>
+                <li>Siswa wajib menjaga kebersihan dan ketertiban di seluruh area sekolah.</li>
+                <li>Dilarang membawa barang-barang yang tidak berhubungan dengan kegiatan belajar-mengajar.</li>
+                <li>Dilarang merokok, menggunakan narkoba, atau minuman keras di lingkungan sekolah.</li>
+                <li>Siswa wajib menghormati guru, staf, dan seluruh warga sekolah.</li>
+            </ul>
+        </section>
+
+        <!-- Bagian Pertiwi -->
+        <section id="pertiwi" class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 pb-2">Aturan Pertiwi</h2>
+            <ul class="list-disc list-inside space-y-2 text-gray-600">
+                <li>Siswa wajib hadir di sekolah paling lambat 10 menit sebelum jam pelajaran dimulai.</li>
+                <li>Siswa wajib menjaga kebersihan dan ketertiban di seluruh area sekolah.</li>
+                <li>Dilarang membawa barang-barang yang tidak berhubungan dengan kegiatan belajar-mengajar.</li>
+                <li>Dilarang merokok, menggunakan narkoba, atau minuman keras di lingkungan sekolah.</li>
+                <li>Siswa wajib menghormati guru, staf, dan seluruh warga sekolah.</li>
+            </ul>
+        </section>
+        
+        <!-- Bagian Buku saku -->
+        <section id="Buku-saku" class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 pb-2">Buku Saku</h2>
+            <ul class="list-disc list-inside space-y-2 text-gray-600">
+                <li>Siswa wajib hadir di sekolah paling lambat 10 menit sebelum jam pelajaran dimulai.</li>
+                <li>Siswa wajib menjaga kebersihan dan ketertiban di seluruh area sekolah.</li>
+                <li>Dilarang membawa barang-barang yang tidak berhubungan dengan kegiatan belajar-mengajar.</li>
+                <li>Dilarang merokok, menggunakan narkoba, atau minuman keras di lingkungan sekolah.</li>
+                <li>Siswa wajib menghormati guru, staf, dan seluruh warga sekolah.</li>
+            </ul>
+        </section>
+        
+        <!-- Bagian Umum -->
+        <section id="umum" class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 pb-2">Aturan Umum</h2>
+            <ul class="list-disc list-inside space-y-2 text-gray-600">
+                <li>Siswa wajib hadir di sekolah paling lambat 10 menit sebelum jam pelajaran dimulai.</li>
+                <li>Siswa wajib menjaga kebersihan dan ketertiban di seluruh area sekolah.</li>
+                <li>Dilarang membawa barang-barang yang tidak berhubungan dengan kegiatan belajar-mengajar.</li>
+                <li>Dilarang merokok, menggunakan narkoba, atau minuman keras di lingkungan sekolah.</li>
+                <li>Siswa wajib menghormati guru, staf, dan seluruh warga sekolah.</li>
+            </ul>
+        </section>
+
+        <!-- Bagian Disiplin -->
+        <section id="disiplin" class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 pb-2">Aturan Kedisiplinan</h2>
+            <ul class="list-disc list-inside space-y-2 text-gray-600">
+                <li>Siswa wajib memakai seragam sekolah lengkap dan rapi sesuai jadwal yang ditentukan.</li>
+                <li>Siswa laki-laki dilarang berambut panjang dan tidak rapi.</li>
+                <li>Siswa perempuan dilarang menggunakan perhiasan yang berlebihan.</li>
+                <li>Tidak ada toleransi untuk perundungan (bullying) dalam bentuk apapun.</li>
+                <li>Keterlambatan akan dikenai sanksi sesuai tata tertib sekolah.</li>
+            </ul>
+        </section>
+
+        <!-- Bagian Akademik -->
+        <section id="akademik" class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 pb-2">Aturan Akademik</h2>
+            <ul class="list-disc list-inside space-y-2 text-gray-600">
+                <li>Siswa wajib mengikuti seluruh kegiatan belajar-mengajar.</li>
+                <li>Siswa wajib mengerjakan dan mengumpulkan tugas tepat waktu.</li>
+                <li>Dilarang melakukan kecurangan dalam ujian atau tugas.</li>
+                <li>Siswa wajib menjaga etika dalam berdiskusi dan bertanya di kelas.</li>
+                <li>Siswa diharapkan untuk aktif berpartisipasi dalam setiap kegiatan akademik.</li>
+            </ul>
+        </section>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto text-center px-4">
+            <p class="text-sm">&copy; 2024 Nama Sekolah Anda. Semua Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Menutup menu saat link di klik di perangkat mobile
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

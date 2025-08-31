@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhandara Griha</title>
+    <!-- Memuat Tailwind CSS dari CDN untuk styling yang cepat dan responsif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Mencegah horizontal scrolling */
+        }
+        /* Penyesuaian agar logo dan nama merek sejajar */
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #333;
+        }
+        /* Mengatur agar menu navigasi dan tombol CTA ditampilkan dalam satu kolom di mobile */
+        @media (max-width: 767px) {
+            .navbar-menu-container {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
+            .navbar-menu-container .nav-links,
+            .navbar-menu-container .cta-buttons {
+                width: 100%;
+                margin-top: 1rem;
+                display: flex; /* Untuk menengahkan item */
+                flex-direction: column; /* Untuk menempatkan item satu di bawah yang lain */
+                align-items: center;
+                gap: 0.5rem; /* Memberi sedikit jarak antar item di mobile */
+            }
+            .navbar-menu-container .nav-links a,
+            .navbar-menu-container .cta-buttons button {
+                width: calc(100% - 2rem); /* Mengurangi padding agar tidak terlalu lebar */
+                max-width: 200px; /* Batasi lebar maksimum */
+            }
+        }
+
+        /* Gaya khusus untuk slider konten populer */
+        .popular-content-slider-container {
+            scroll-snap-type: x mandatory; /* Memastikan konten "mengunci" saat di-scroll */
+            -webkit-overflow-scrolling: touch; /* Untuk scroll yang lebih halus di iOS */
+        }
+
+        .popular-content-slider-container .popular-content-card {
+            flex: 0 0 auto; /* Mencegah kartu mengecil dan memastikan lebarnya tetap */
+            width: 100%; /* Lebar default untuk mobile */
+            scroll-snap-align: start; /* Mengatur titik snap untuk setiap kartu */
+        }
+
+        @media (min-width: 640px) { /* sm breakpoint */
+            .popular-content-slider-container .popular-content-card {
+                width: calc(100% / 2 - 1rem); /* 2 kolom, dengan gap 1rem */
+            }
+        }
+
+        @media (min-width: 768px) { /* md breakpoint */
+            .popular-content-slider-container .popular-content-card {
+                width: calc(100% / 3 - 1.5rem); /* 3 kolom, dengan gap 1.5rem */
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .popular-content-slider-container .popular-content-card {
+                width: calc(100% / 4 - 1.125rem); /* 4 kolom, dengan gap 1.5rem dibagi rata */
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header / Navbar Section -->
+    <header class="bg-white shadow-md py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center flex-wrap">
+            <!-- Logo and Brand Name -->
+            <div class="logo flex items-center gap-2">
+                <img src="https://placehold.co/32x32/007bff/ffffff?text=Logo" alt="Logo" class="rounded-full">
+                <span class="text-blue-600 font-bold text-lg">Bhandara Griha</span>
+            </div>
+
+            <!-- Hamburger menu button for mobile -->
+            <button id="hamburger-button" class="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h4"></path>
+                </svg>
+            </button>
+
+            <!-- Navigation Links and CTA Buttons (hidden on mobile by default) -->
+            <div id="navbar-menu" class="navbar-menu-container hidden md:flex md:flex-grow md:justify-end md:items-center w-full md:w-auto">
+                <nav class="nav-links flex md:justify-start mt-2 md:mt-0 space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300">Beranda</a>
+                    <a href="" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300">Daftar Konten</a>
+                    <a href="#contact" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300">Kontak</a>
+                    <a href="Peraturan/aturan-buku-saku.html" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300">Peraturan</a>
+                    <a href="Buku-online/portalbukuonline.html" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300">Buku Online</a>
+                </nav>
+
+                <div class="cta-buttons flex space-x-3 mt-2 md:mt-0 md:ml-6">
+                    <a href="login.html">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-300">Masuk</button>
+                    </a>
+                    <a href="register.html">
+                        <button class="bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-300">Daftar</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Slider Section -->
+    <main class="relative bg-gray-400 h-[75vh] flex items-center justify-center overflow-hidden rounded-lg mt-4 mx-4 md:mx-auto max-w-screen-xl">
+        <div class="absolute inset-0 flex items-center justify-between px-4 md:px-8">
+            <!-- Left Arrow -->
+            <button class="bg-gray-700 bg-opacity-50 hover:bg-opacity-75 text-white p-3 rounded-full transition-colors duration-300 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            
+            <!-- Slider Content -->
+            <h1 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-center drop-shadow-lg">Slider Image 1</h1>
+
+            <!-- Right Arrow -->
+            <button class="bg-gray-700 bg-opacity-50 hover:bg-opacity-75 text-white p-3 rounded-full transition-colors duration-300 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    </main>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Selamat Datang di Situs Kami!</h2>
+            <p class="text-gray-600 mb-12 max-w-2xl mx-auto">
+                website bertujuan untuk berbagi dengan prinsip dari taruna untuk taruna dan untuk mengembangkan 
+                potensi tarun
+        </div>
+        
+        <!DOCTYPE html>
+        <html lang="id">
+        <head> 
+            <script src="https://cdn.tailwindcss.com"></script>
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+                body {
+                    font-family: 'Inter', sans-serif;
+                    background-color: #f0f8ff;
+                }
+                .card-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.5rem;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 1.5rem;
+                }
+                @media (min-width: 768px) {
+                    .card-container {
+                        flex-direction: row;
+                    }
+                }
+            </style>
+        </head>
+        <body class="p-4 md:p-8 bg-gray-100 min-h-screen">
+            <div class="card-container">
+                <!-- Kartu 1: Sumber Belajar -->
+                    <div class="bg-white rounded-2xl shadow-lg border border-blue-200 p-6 flex-1 flex flex-col justify-between hover:bg-blue-50 transition-colors duration-300">
+                        <div>
+                            <h2 class="text-2xl font-semibold text-blue-600 mb-2">Sumber Belajar</h2>
+                            <a href="fitur unggulan/sumber_belajar.html" class="text-gray-700 leading-relaxed mb-4">
+                                Temukan ribuan konten pembelajaran dalam berbagai bentuk, mulai dari video, audio, artikel, games, dan banyak lagi yang dapat diakses kapan saja dan di mana saja.</a>
+                        </div>
+                    </div>
+
+                <!-- Kartu 2: Kelas Maya -->
+                <div class="bg-white rounded-2xl shadow-lg border border-blue-200 p-6 flex-1 flex flex-col justify-between hover:bg-blue-50 transition-colors duration-300">
+                    <div>
+                        <h2 class="text-2xl font-semibold text-blue-600 mb-2">Kelas Maya</h2>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            Sebuah Learning Management System (LMS) yang dikembangkan khusus untuk memfasilitasi proses pembelajaran secara daring dan terintegrasi.
+                        </p>
+                        <div class="text-sm font-medium text-gray-500 mt-2">Segera Hadir</div>
+                    </div>
+                </div>
+
+                <!-- Kartu 3: Bank Soal -->
+                <div class="bg-white rounded-2xl shadow-lg border border-blue-200 p-6 flex-1 flex flex-col justify-between hover:bg-blue-50 transition-colors duration-300">
+                    <div>
+                        <h2 class="text-2xl font-semibold text-blue-600 mb-2">Bank Soal</h2>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            Fitur kumpulan soal dan materi evaluasi siswa yang dikelompokkan berdasarkan topik ajar. Tersedia juga fitur kuis untuk menguji pemahaman.
+                        </p>
+                        <div class="text-sm font-medium text-gray-500 mt-2">Segera Hadir</div>
+                    </div>
+                </div>
+            </div>
+
+        </body>
+        </html> 
+    </section>
+
+    <!-- Popular Content Section -->
+    <section class="py-16 bg-gray-100 text-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-2xl font-semibold">Konten Populer</h3>
+                <div class="flex space-x-2">
+                    <button id="popular-prev" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button id="popular-next" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Konten Populer Slider Wrapper -->
+            <div id="popular-content-slider" class="popular-content-slider-container flex overflow-x-auto pb-4 space-x-6 scroll-smooth">
+                <!-- Popular Content Card 1 -->
+                <div class="popular-content-card bg-white p-4 rounded-lg shadow-md flex flex-col">
+                    <div class="w-full h-40 bg-teal-500 bg-opacity-30 rounded-md mb-4 flex items-center justify-center text-teal-200 text-2xl font-bold">COMING SOON</div>
+                    <h4 class="text-lg font-semibold mb-1">Materi Literasi</h4>
+                    <a href="" class="text-gray-400 text-sm">Litersi penting kita lakukan demi masa depan yang indah</a>
+                </div>
+
+                <!-- Popular Content Card 2 -->
+                <div class="popular-content-card bg-white p-4 rounded-lg shadow-md flex flex-col">
+                    <div class="w-full h-40 bg-teal-500 bg-opacity-30 rounded-md mb-4 flex items-center justify-center text-teal-200 text-2xl font-bold">COMING SOON</div>
+                    <h4 class="text-lg font-semibold mb-1">Coming Soon!</h4>
+                    <p class="text-gray-400 text-sm">Lab maya interaktif akan segera tersedia. Level: Semua Tingkat</p>
+                </div>
+
+                <!-- Popular Content Card 3 -->
+                <div class="popular-content-card bg-white p-4 rounded-lg shadow-md flex flex-col">
+                    <div class="w-full h-40 bg-teal-500 bg-opacity-30 rounded-md mb-4 flex items-center justify-center text-teal-200 text-2xl font-bold">COMING SOON</div>
+                    <h4 class="text-lg font-semibold mb-1">Coming Soon!</h4>
+                    <p class="text-gray-400 text-sm">Video pembelajaran menarik akan diluncurkan. Level: Semua Tingkat</p>
+                </div>
+
+                <!-- Popular Content Card 4 -->
+                <div class="popular-content-card bg-white p-4 rounded-lg shadow-md flex flex-col">
+                    <div class="w-full h-40 bg-purple-500 bg-opacity-30 rounded-md mb-4 flex items-center justify-center text-purple-200 text-2xl font-bold">COMING SOON</div>
+                    <h4 class="text-lg font-semibold mb-1">Coming Soon!</h4>
+                    <p class="text-gray-400 text-sm">Konten interaktif akan datang. Level: Semua Tingkat</p>
+                </div>
+                <!-- Tambahkan lebih banyak kartu jika diperlukan untuk demonstrasi sliding -->
+                <div class="popular-content-card bg-white p-4 rounded-lg shadow-md flex flex-col">
+                    <div class="w-full h-40 bg-blue-500 bg-opacity-30 rounded-md mb-4 flex items-center justify-center text-blue-200 text-2xl font-bold">COMING SOON</div>
+                    <h4 class="text-lg font-semibold mb-1">Coming Soon!</h4>
+                    <p class="text-gray-400 text-sm">Konten tambahan 1. Level: Semua Tingkat</p>
+                </div>
+                <div class="popular-content-card bg-white p-4 rounded-lg shadow-md flex flex-col">
+                    <div class="w-full h-40 bg-red-500 bg-opacity-30 rounded-md mb-4 flex items-center justify-center text-red-200 text-2xl font-bold">COMING SOON</div>
+                    <h4 class="text-lg font-semibold mb-1">Coming Soon!</h4>
+                    <p class="text-gray-400 text-sm">Konten tambahan 2. Level: Semua Tingkat</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4 text-center max-w-2xl">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Kontak Kami</h2>
+            <p class="text-gray-600 mb-8">
+                Punya pertanyaan atau saran? Jangan ragu untuk menghubungi kami!
+            </p>
+
+            <form id="contact-form" class="bg-white p-8 rounded-lg shadow-md text-left">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nama Lengkap:</label>
+                    <input type="text" id="name" name="name" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Masukkan nama Anda" required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Alamat Email:</label>
+                    <input type="email" id="email" name="email" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="contoh@domain.com" required>
+                </div>
+                <div class="mb-6">
+                    <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Pesan Anda:</label>
+                    <textarea id="message" name="message" rows="5" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Tulis pesan Anda di sini..." required></textarea>
+                </div>
+                <div class="flex items-center justify-center">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        Kirim Pesan
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </section>
+
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-950 text-gray-300 py-12">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <!-- Column 1: Bhandara Griha Info -->
+            <div>
+                <div class="flex items-center justify-center md:justify-start gap-2 mb-4">
+                    <img src="https://placehold.co/32x32/007bff/ffffff?text=Logo" alt="Logo" class="rounded-full">
+                    <span class="text-blue-400 font-bold text-lg">Bhandara Griha</span>
+                </div>
+                <p class="text-sm">Jl. A.A. Pandji Tisna, Kaliasem, Kec. Banjar, Kabupaten Buleleng, Bali 81152</p>
+            </div>
+
+            <!-- Column 2: Menu -->
+            <div>
+                <h4 class="text-lg font-semibold text-white mb-4">Menu</h4>
+                <ul class="space-y-2">
+                    <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors duration-300">Beranda</a></li>
+                    <li><a href="daftar konten.html" class="text-gray-400 hover:text-white transition-colors duration-300">Daftar Konten</a></li>
+                    <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors duration-300">Kontak</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Social Media -->
+            <div>
+                <h4 class="text-lg font-semibold text-white mb-4">smatarunamandara</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-center justify-center md:justify-start gap-2">
+                        <!-- Placeholder for social media icon -->
+                        <span class="text-gray-400">@smatarunamandara</span>
+                    </li>
+                    <li class="flex items-center justify-center md:justify-start gap-2">
+                        <!-- Placeholder for social media icon -->
+                        <span class="text-gray-400">@smatarunamandara</span>
+                    </li>
+                    <li class="flex items-center justify-center md:justify-start gap-2">
+                        <!-- Placeholder for social media icon -->
+                        <span class="text-gray-400">smatarunamandara FB</span>
+                    </li>
+                    <li class="flex items-center justify-center md:justify-start gap-2">
+                        <!-- Placeholder for social media icon -->
+                        <span class="text-gray-400">smatarunamandara YT</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-4 mt-8 pt-8 border-t border-gray-700 text-center text-sm text-gray-500">
+            <p>&copy; Copyright 2020 SMA Taruna Mandara. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mengambil elemen tombol hamburger dan menu navigasi
+        const hamburgerButton = document.getElementById('hamburger-button');
+        const navbarMenu = document.getElementById('navbar-menu');
+
+        // Menambahkan event listener untuk klik pada tombol hamburger
+        hamburgerButton.addEventListener('click', () => {
+            // Mengubah kelas 'hidden' menjadi 'flex' (atau sebaliknya) untuk menampilkan/menyembunyikan menu
+            navbarMenu.classList.toggle('hidden');
+            navbarMenu.classList.toggle('flex');
+            
+            // Tambahkan kelas untuk tampilan mobile agar elemen-elemen berada di bawah satu sama lain
+            if (navbarMenu.classList.contains('flex')) {
+                navbarMenu.classList.add('flex-col', 'items-center', 'justify-center');
+                navbarMenu.classList.remove('md:flex-grow', 'md:justify-end', 'md:items-center');
+            } else {
+                navbarMenu.classList.remove('flex-col', 'items-center', 'justify-center');
+                navbarMenu.classList.add('md:flex-grow', 'md:justify-end', 'md:items-center');
+            }
+        });
+
+        // Menambahkan event listener untuk merespons perubahan ukuran jendela
+        // Ini memastikan menu hamburger berfungsi dengan benar saat ukuran layar berubah dari mobile ke desktop dan sebaliknya
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) { // Ukuran md (medium) Tailwind adalah 768px
+                navbarMenu.classList.remove('hidden', 'flex-col', 'items-center', 'justify-center');
+                navbarMenu.classList.add('flex', 'md:flex-grow', 'md:justify-end', 'md:items-center');
+            } else {
+                navbarMenu.classList.add('hidden');
+                navbarMenu.classList.remove('flex', 'flex-col', 'items-center', 'justify-center', 'md:flex-grow', 'md:justify-end', 'md:items-center');
+            }
+        });
+
+        // =======================================================
+        // JavaScript untuk Slider Konten Populer Otomatis dan Manual
+        // =======================================================
+        const popularContentSlider = document.getElementById('popular-content-slider');
+        const popularPrevBtn = document.getElementById('popular-prev');
+        const popularNextBtn = document.getElementById('popular-next');
+        const slideSpeed = 3000; // Interval geser otomatis dalam milidetik (3 detik)
+        let slideInterval;
+
+        function getScrollAmount() {
+            // Menentukan berapa banyak scroll berdasarkan jumlah kartu yang terlihat
+            const containerWidth = popularContentSlider.offsetWidth;
+            const cardWidth = popularContentSlider.querySelector('.popular-content-card').offsetWidth;
+            const cardsInView = Math.floor(containerWidth / cardWidth);
+            return cardWidth * cardsInView;
+        }
+
+        function slideNext() {
+            popularContentSlider.scrollBy({
+                left: popularContentSlider.offsetWidth, // Menggeser sebanyak lebar container
+                behavior: 'smooth'
+            });
+            // Jika sudah di akhir, kembali ke awal
+            if (popularContentSlider.scrollLeft + popularContentSlider.offsetWidth >= popularContentSlider.scrollWidth) {
+                popularContentSlider.scrollTo({
+                    left: 0,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        function slidePrev() {
+            popularContentSlider.scrollBy({
+                left: -popularContentSlider.offsetWidth, // Menggeser sebanyak lebar container ke kiri
+                behavior: 'smooth'
+            });
+            // Jika sudah di awal, pindah ke akhir
+            if (popularContentSlider.scrollLeft <= 0) {
+                popularContentSlider.scrollTo({
+                    left: popularContentSlider.scrollWidth,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Fungsi untuk memulai geser otomatis
+        function startAutoSlide() {
+            slideInterval = setInterval(slideNext, slideSpeed);
+        }
+
+        // Fungsi untuk menghentikan geser otomatis
+        function stopAutoSlide() {
+            clearInterval(slideInterval);
+        }
+
+        // Event listener untuk tombol navigasi manual
+        popularNextBtn.addEventListener('click', () => {
+            stopAutoSlide(); // Hentikan geser otomatis saat manual
+            slideNext();
+            startAutoSlide(); // Mulai lagi setelah jeda
+        });
+
+        popularPrevBtn.addEventListener('click', () => {
+            stopAutoSlide(); // Hentikan geser otomatis saat manual
+            slidePrev();
+            startAutoSlide(); // Mulai lagi setelah jeda
+        });
+
+        // Memulai geser otomatis saat halaman dimuat
+        window.addEventListener('load', startAutoSlide);
+
+        // Menghentikan geser otomatis saat kursor di atas slider dan memulai lagi saat kursor pergi
+        popularContentSlider.addEventListener('mouseenter', stopAutoSlide);
+        popularContentSlider.addEventListener('mouseleave', startAutoSlide);
+
+        // Memastikan slider berfungsi dengan baik saat ukuran jendela berubah
+        window.addEventListener('resize', () => {
+            stopAutoSlide(); // Hentikan dulu
+            // Perbarui posisi scroll jika perlu setelah resize
+            // Misalnya, jika kartu yang terlihat berubah
+            popularContentSlider.scrollTo({ left: 0, behavior: 'smooth' }); // Reset ke awal
+            startAutoSlide(); // Mulai lagi
+        });
+
+        // =======================================================
+        // JavaScript untuk Formulir Kontak (Gmail Compose)
+        // =======================================================
+        const contactForm = document.getElementById('contact-form');
+
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            const recipientEmail = 'bhandaragriha@gmail.com';
+            const subject = encodeURIComponent(`Pesan dari Website - ${name}`);
+            const body = encodeURIComponent(`Nama: ${name}\nEmail: ${email}\n\nPesan:\n${message}`);
+
+            // Redirect ke Gmail compose
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipientEmail}&su=${subject}&body=${body}`;
+            window.open(gmailUrl, '_blank');
+        });
+    </script>
+
+</body>
+</html>

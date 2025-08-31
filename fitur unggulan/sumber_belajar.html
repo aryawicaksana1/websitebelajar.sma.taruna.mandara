@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal pencari materi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .search-container {
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .placeholder-image {
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 150px;
+            color: #888;
+            font-weight: 500;
+        }
+        /* Custom styles to match the image */
+        .search-input {
+            background-color: #f7f9fc;
+            border: 1px solid #d1d5db;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+        }
+        .search-button {
+            background-color: #1a56db;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            transition: background-color 0.2s;
+        }
+        .search-button:hover {
+            background-color: #1e40af;
+        }
+        .reset-button {
+            background-color: transparent;
+            color: #4b5563;
+            border: 1px solid #d1d5db;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-8">
+        <h1 class="text-center text-4xl font-bold text-gray-800 mb-8">Telusuri Berbagai Konten Menarik</h1>
+
+        <div class="search-container">
+            <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+                <div class="relative w-full md:w-auto flex-grow">
+                    <input type="text" id="search-keyword" placeholder="Masukkan keywords pencarian" class="w-full search-input pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+                
+                <div class="w-full md:w-auto">
+                    <select id="search-jenjang" class="w-full search-input focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Pilih Jenjang</option>
+                        <option value="SD">SD</option>
+                        <option value="SMP">SMP</option>
+                        <option value="SMA">SMA</option>
+                    </select>
+                </div>
+                
+                <button onclick="searchContent()" class="w-full md:w-auto search-button font-semibold">Cari</button>
+                <button onclick="resetFilters()" class="w-full md:w-auto reset-button font-semibold">Reset Filter</button>
+            </div>
+        </div>
+
+        <div id="content-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Konten akan dimuat di sini oleh JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Data dummy untuk konten
+        const allContent = [
+            { id: 1, title: 'Matematika', jenjang: 'SMA', tipe: 'foto', image: 'https://placehold.co/400x250/e0f2fe/0c4a6e?text=Video+Pembelajaran' },
+            { id: 2, title: 'Barisan dan Deret', jenjang: 'SMA', tipe: 'Audio', image: 'https://placehold.co/400x250/f0f9ff/0f766e?text=Audio+Pelajaran' },
+            { id: 3, title: 'Vektor dan Operasinya', jenjang: 'SMA', tipe: 'Video', image: 'https://placehold.co/400x250/fff7ed/9a3412?text=Video+Edukasi' },
+            { id: 4, title: '', jenjang: 'SD', tipe: 'Video', image: 'https://placehold.co/400x250/fef2f2/991b1b?text=Pelajaran+Alam' },
+            { id: 5, title: 'Pemanasan Global', jenjang: 'SMA', tipe: 'Video', image: 'https://placehold.co/400x250/dbeafe/1e40af?text=Ilmu+Pengetahuan' },
+            { id: 6, title: 'Sejarah Indonesia', jenjang: 'SMP', tipe: 'Teks', image: 'https://placehold.co/400x250/eef2ff/3730a3?text=Artikel+Sejarah' },
+            { id: 7, title: 'Sistem Pernapasan', jenjang: 'SMP', tipe: 'Video', image: 'https://placehold.co/400x250/f0fdf4/14532d?text=Biologi+SMP' },
+            { id: 8, title: 'Dasar Pemrograman', jenjang: 'SMP', tipe: 'Video', image: 'https://placehold.co/400x250/f0f9ff/0f766e?text=Belajar+Coding' },
+        ];
+
+        // Fungsi untuk merender konten ke dalam HTML
+        function renderContent(contents) {
+            const contentList = document.getElementById('content-list');
+            contentList.innerHTML = '';
+
+            if (contents.length === 0) {
+                contentList.innerHTML = '<p class="col-span-full text-center text-gray-500">Tidak ada materi yang ditemukan.</p>';
+                return;
+            }
+
+            contents.forEach(content => {
+                const card = document.createElement('a');
+                // Arahkan card sesuai judul
+                if (content.title === 'Matematika') {
+                    card.href = '../materi pelajaran/catatan-matematika.html';
+                } else if (content.title === 'Matematika Tingkat Lanjut') {
+                    card.href = '../materi pelajaran/catatan-matematikaTL.html';
+                } else if (content.title === 'Bahasa Indonesia') {
+                    card.href = '../materi pelajaran/catatan-bahasa-indonesia.html';
+                } else {
+                    card.href = `materi.html?id=${content.id}`;
+                }
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="relative w-full h-40 overflow-hidden rounded-t-lg">
+                        <img src="${content.image}" alt="${content.title}" class="w-full h-full object-cover">
+                        <span class="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">${content.jenjang}</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-gray-800">${content.title}</h3>
+                        <p class="text-sm text-gray-500 mt-1">${content.tipe}</p>
+                    </div>
+                `;
+                contentList.appendChild(card);
+            });
+        }
+
+        // Fungsi untuk mencari dan memfilter konten
+        function searchContent() {
+            const keyword = document.getElementById('search-keyword').value.toLowerCase();
+            const jenjang = document.getElementById('search-jenjang').value;
+
+            const filteredContent = allContent.filter(content => {
+                const matchesKeyword = content.title.toLowerCase().includes(keyword);
+                const matchesJenjang = jenjang === '' || content.jenjang.toLowerCase().includes(jenjang.toLowerCase());
+                return matchesKeyword && matchesJenjang;
+            });
+
+            renderContent(filteredContent);
+        }
+
+        // Fungsi untuk mereset filter
+        function resetFilters() {
+            document.getElementById('search-keyword').value = '';
+            document.getElementById('search-jenjang').value = '';
+            searchContent(); // Panggil fungsi pencarian untuk menampilkan semua konten
+        }
+
+        // Jalankan pencarian saat halaman pertama kali dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            searchContent();
+        });
+    </script>
+</body>
+</html>

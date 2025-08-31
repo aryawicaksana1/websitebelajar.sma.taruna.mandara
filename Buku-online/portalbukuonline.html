@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pencarian Buku & Judul</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-4 sm:p-8">
+
+    <!-- Header Section -->
+    <header class="w-full max-w-4xl text-center mb-8">
+        <h1 class="text-4xl sm:text-5xl font-bold text-gray-800 mb-2">Pustaka Pintar</h1>
+        <p class="text-lg text-gray-600">Temukan buku dan judul sesuai jenjang pendidikan</p>
+    </header>
+
+    <!-- Main Content & Search Section -->
+    <main class="w-full max-w-4xl bg-white rounded-2xl shadow-lg p-6 sm:p-10">
+        <!-- Search Controls -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-6">
+            <div class="flex-1">
+                <label for="book-title" class="block text-sm font-medium text-gray-700 mb-1">Cari Judul Buku</label>
+                <input type="text" id="book-title" placeholder="Masukkan judul buku..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
+            </div>
+            <div class="flex-1">
+                <label for="education-level" class="block text-sm font-medium text-gray-700 mb-1">Pilih Jenjang Pendidikan</label>
+                <select id="education-level" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
+                    <option value="">Semua Jenjang</option>
+                    <option value="SD">Sekolah Dasar (SD)</option>
+                    <option value="SMP">Sekolah Menengah Pertama (SMP)</option>
+                    <option value="SMA">Sekolah Menengah Atas (SMA)</option>
+                    <option value="Perguruan Tinggi">Perguruan Tinggi</option>
+                    <option value="Umum">Umum</option>
+                </select>
+            </div>
+        </div>
+
+        <button onclick="searchBooks()" class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-md">
+            Cari Buku
+        </button>
+
+        <!-- Book List Section -->
+        <div id="book-list" class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <!-- Book items will be injected here by JavaScript -->
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="hidden text-center text-gray-500 mt-8 text-lg font-medium">
+            Tidak ada buku yang ditemukan.
+        </div>
+    </main>
+
+    <!-- Book Details Modal -->
+    <div id="book-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg p-6 sm:p-8 relative transform transition-all duration-300 scale-95 opacity-0">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <div id="modal-content" class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                <!-- Modal content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data dummy untuk buku
+        const allBooks = [
+    { title: "Buku Paket Kimia", level: "SMA", class: "XII", author: "KEMENTRIAN PENDIDIKAN", description: "buku Kimia Kelas 12 adalah panduan untuk mendalami ilmu kimia pada tingkat yang lebih kompleks. Isinya mencakup topik-topik seperti sifat koligatif larutan, elektrokimia, dan kimia organik yang membahas tentang senyawa karbon dan makromolekul..", image: "sampul buku/Kimia_BS_KLS_XII_Cover (kurikulum merdeka).png", url: "https://buku.kemendikdasmen.go.id/katalog/kimia-untuk-smama-kelas-xii", },
+    { title: "Buku Paket Matematika Lanjut", level: "SMA", class: "XII", author: "KEMENTRIAN PENDIDIKAN", description: "buku Matematika Tingkat Lanjut Kelas 12 adalah panduan yang lebih fokus. Buku ini membahas konsep-konsep penting seperti turunan, integral, dan matriks, yang menjadi fondasi bagi studi lanjut di perguruan tinggi.", image: "sampul buku/Matematika-Lanjut-BS-KLS-XII-Cover (kurikulum merdeka).png", url: "https://buku.kemendikdasmen.go.id/katalog/matematika-tingkat-lanjut-untuk-smama-kelas-xii", },
+    { title: "Buku Paket Matematika Wajib", level: "SMA", class: "XII", author: "KEMENTRIAN PENDIDIKAN", description: "Buku Matematika Wajib Kelas 12 adalah panduan bagi siswa untuk mempelajari konsep-konsep dasar seperti transformasi geometri, barisan dan deret, serta dasar-dasar statistika dan peluang. Tujuannya adalah untuk membangun kemampuan berpikir logis yang diperlukan dalam kehidupan sehari-hari.", image: "sampul buku/Matematika-BS-KLS-XII-Cover (kurikulum merdeka).png", url: "https://buku.kemendikdasmen.go.id/katalog/matematika-untuk-smasmkma-kelas-xii", },
+    { title: "Buku Paket Sejarah", level: "SMA", class: "XII", author: "KEMENTRIAN PENDIDIKAN", description: "Buku paket Sejarah Kelas 12 adalah buku utama untuk materi sejarah tingkat akhir. Isinya mencakup sejarah Indonesia dan dunia, dilengkapi foto dan peta agar mudah dipahami. Tujuannya melatih siswa berpikir kritis tentang berbagai peristiwa masa lalu..", image: "sampul buku/Sejarah_BS_KLS_XII_Cover (kurikulum merdeka).png", url: "https://example.com/read/buku4", },
+    { title: "Buku Paket Fisika", level: "SMA", class: "XII", author: "KEMENTRIAN PENDIDIKAN", description: "Fisika kelas 12 membahas konsep-konsep tingkat lanjut seperti listrik dan magnet, gelombang, serta fisika modern seperti relativitas dan fisika kuantum. Materi ini berfungsi sebagai jembatan antara fisika klasik dan modern, membantu siswa memahami alam semesta dari skala terkecil hingga terbesar..", image: "sampul buku/Fisika_BS_KLS_XII_Cover (kurikulum merdeka).png", url: "https://buku.kemendikdasmen.go.id/katalog/fisika-untuk-smama-kelas-xii", },
+    { title: "Buku Paket Agama Hindu", level: "SMA", class: "XII", author: "KEMENTRIAN PENDIDIKAN", description: "Buku Pendidikan Agama Hindu dan Budi Pekerti Kelas 12 adalah panduan untuk mendalami ajaran agama Hindu pada tingkat yang lebih tinggi. Buku ini membahas filsafat (Tattwa), etika (Susila), dan ritual keagamaan yang lebih mendalam untuk membentuk karakter siswa.", image: "sampul buku/Hindu-BS-KLS-XII-Cover (kurikulum merdeka).png", url: "https://buku.kemendikdasmen.go.id/katalog/pendidikan-agama-hindu-dan-budi-pekerti-untuk-smasmk-kelas-xii", },
+    { title: "Buku Paket PJOK", level: "SMA", class: "XII", author: "KEMENTRIAN PENDIDIKAN", description: "Buku paket Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK) Kelas 12 adalah panduan untuk mendalami strategi olahraga, kebugaran, dan kesehatan. Isinya mencakup taktik permainan, teknik atletik, dan pentingnya pola hidup sehat. Tujuannya adalah membentuk kebiasaan hidup sehat dan sportivitas pada siswa.", image: "sampul buku/PJOK_BG_KLS_XII_Cover (panduan guru) (kurikulum merdeka).png ", url: "https://buku.kemendikdasmen.go.id/katalog/buku-panduan-guru-pendidikan-jasmani-olahraga-dan-kesehatan-untuk-smama-kelas-xii", },
+    { title: "Buku Paket Pendidikan Kewarganegaraan", level: "SMA", class: "XII", author: "KEMENTRIAN PENDIDIKAN", description: "Buku paket Pendidikan Pancasila Kelas 12 adalah panduan untuk mendalami ideologi negara. Isinya mencakup Pancasila sebagai ideologi terbuka, sistem ketatanegaraan, pentingnya persatuan bangsa, dan peran warga negara. Tujuannya adalah membentuk siswa menjadi warga negara yang kritis dan bertanggung jawab.", image: "sampul buku/Pendidikan-Pancasila-BS-KLS-XII-Cover (kurikulum merdeka).png", url: "https://buku.kemendikdasmen.go.id/katalog/pendidikan-pancasila-untuk-smamasmkmak-kelas-xii",  },
+    { title: "Buku Paket Bahasa Inggris Wajib ", level: "SMA", class: "XII", author: "KEMENTRIAN PENDIDIKAN", description: "Buku paket Bahasa Inggris Wajib Kelas 12 adalah panduan untuk menguasai keterampilan berbahasa Inggris yang lebih kompleks. Isinya mencakup pemahaman teks artikel opini, penulisan surat lamaran kerja, dan berbagai latihan berbicara untuk persiapan di perguruan tinggi atau dunia kerja.", image: "sampul buku/Inggris_BS_KLS_XII_Cover (kurikulum merdeka).png", url: "https://buku.kemendikdasmen.go.id/katalog/bahasa-inggris-life-today-untuk-smama-kelas-xii", },
+    { title: "Buku Paket Biologi", level: "SMA", class: "XII", author: "KEMENTRIAN PENDIDIKAN", description: "Buku paket Biologi Kelas 12 adalah panduan untuk mendalami ilmu kehidupan. Isinya mencakup genetika, evolusi, fisiologi manusia, dan bioteknologi. Tujuannya adalah membantu siswa memahami mekanisme kehidupan serta isu-isu biologi terkini.", image: "sampul buku/Biologi_BS_KLS_XII_Cover  (kurikulum merdeka).png", url: "https://buku.kemendikdasmen.go.id/katalog/biologi-untuk-sma-kelas-xii",  },
+    { title: "Buku Paket Informatika", level: "SMA", class: "XII", author: "KEMENTRIAN PENDIDIKAN", description: "Buku paket Informatika Kelas 12 adalah panduan untuk memahami konsep teknologi yang lebih dalam. Isinya mencakup berpikir komputasional, jaringan komputer, analisis data, dan pemrograman. Tujuannya adalah melatih siswa menjadi pemecah masalah dan pencipta di era digital.", image: "sampul buku/Informatika_BS_KLS_XII_Cover (kurikulum merdeka).png", url: "https://buku.kemendikdasmen.go.id/katalog/informatika-untuk-smama-kelas-xii", },
+    { title: "Buku Paket Bahasa Indonesia", level: "SMA", class: "XI", author: "KEMENTRIAN PENDIDIKAN", description: "Buku paket Bahasa Indonesia Kelas 12 adalah panduan untuk menguasai keterampilan berbahasa, seperti menulis surat lamaran kerja dan proposal. Buku ini juga membahas analisis teks, apresiasi sastra, dan cara menyajikan gagasan secara efektif. Tujuannya adalah membekali siswa dengan kemampuan komunikasi yang kuat.", image: "sampul buku/Indonesia_BS_KLS_XII_Cover (kurikulum merdeka).png", url: "https://buku.kemendikdasmen.go.id/katalog/cerdas-cergas-berbahasa-dan-bersastra-indonesia-untuk-smasmkma-kelas-xii", },
+    { title: "Buku Paket Bahasa Inggris Lanjut", level: "SMA", class: "XII", author: "KEMENTRIAN PENDIDIKAN", description: "Buku paket Bahasa Inggris Tingkat Lanjut Kelas 12 adalah panduan untuk menguasai bahasa Inggris yang lebih kompleks dan akademis. Isinya mencakup cara menulis esai akademis, memahami teks sulit, dan berpresentasi. Tujuannya adalah mempersiapkan siswa agar lancar berbahasa Inggris untuk studi dan karier di masa depan.", image: "sampul buku/Inggris_Lanjut_BS_KLS_XII_Cover (kurikulum merdeka).png", url: "https://buku.kemendikdasmen.go.id/katalog/bahasa-inggris-tingkat-lanjut-train-of-thoughts-untuk-smama-kelas-xii", },
+        ];
+
+        // Fungsi untuk menampilkan daftar buku
+        function renderBooks(books) {
+            const bookList = document.getElementById('book-list');
+            const noResults = document.getElementById('no-results');
+            bookList.innerHTML = '';
+
+            if (books.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+            }
+
+            books.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'bg-gray-50 rounded-xl overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer';
+                bookCard.onclick = () => showBookDetails(book);
+                bookCard.innerHTML = `
+                    <img src="${book.image}" alt="Sampul Buku ${book.title}" class="w-full h-auto object-cover rounded-t-xl">
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg text-gray-800">${book.title}</h3>
+                        <p class="text-sm text-gray-600">Oleh: ${book.author}</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">${book.level}</span>
+                            <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                                ${book.class ? book.class : 'Kelas -'}
+                            </span>
+                        </div>
+                    </div>
+                `;
+                bookList.appendChild(bookCard);
+            });
+        }
+
+        // Fungsi untuk menampilkan detail buku di modal
+        function showBookDetails(book) {
+            const modal = document.getElementById('book-modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            modalContent.innerHTML = `
+                <div class="w-full sm:w-1/3 flex-shrink-0">
+                    <img src="${book.image}" alt="Sampul Buku ${book.title}" class="w-full h-auto rounded-xl object-cover shadow-md">
+                </div>
+                <div class="flex-1 mt-4 sm:mt-0">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">${book.title}</h2>
+                    <p class="text-gray-600 mb-4">Oleh: <span class="font-medium">${book.author}</span></p>
+                    <span class="inline-block bg-blue-100 text-blue-800 text-sm font-semibold mb-4 px-3 py-1 rounded-full">${book.level}</span>
+                    <p class="text-gray-700 text-base leading-relaxed">${book.description}</p>
+                    <div class="mt-6 flex flex-col sm:flex-row gap-4">
+                        <a href="${book.url}" target="_blank" class="w-full text-center bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-md">
+                            Baca Buku
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            // Animate the modal content
+            setTimeout(() => {
+                modal.querySelector('div').classList.remove('scale-95', 'opacity-0');
+                modal.querySelector('div').classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        // Fungsi untuk menutup modal
+        function closeModal() {
+            const modal = document.getElementById('book-modal');
+            // Animate the modal out
+            modal.querySelector('div').classList.remove('scale-100', 'opacity-100');
+            modal.querySelector('div').classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300); // Wait for the transition to finish
+        }
+
+        // Fungsi utama untuk mencari buku
+        function searchBooks() {
+            const titleInput = document.getElementById('book-title').value.toLowerCase();
+            const levelSelect = document.getElementById('education-level').value;
+
+            const filteredBooks = allBooks.filter(book => {
+                const matchesTitle = book.title.toLowerCase().includes(titleInput);
+                const matchesLevel = levelSelect === "" || book.level === levelSelect;
+                return matchesTitle && matchesLevel;
+            });
+
+            renderBooks(filteredBooks);
+        }
+
+        // Jalankan pencarian saat halaman pertama kali dimuat untuk menampilkan semua buku
+        window.onload = function() {
+            searchBooks();
+        };
+
+    </script>
+</body>
+</html>

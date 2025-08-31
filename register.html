@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Pendaftaran</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e5e7eb;
+        }
+        .register-card {
+            background: #ffffff;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-gray-200 min-h-screen flex items-center justify-center p-4 sm:p-8">
+
+    <div class="register-card w-full max-w-xl rounded-3xl shadow-2xl p-6 sm:p-10 transform transition-all duration-300 scale-100">
+        <!-- Logo atau Icon -->
+        <div class="flex justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M12 20.248a8 8 0 100-16M12 21a9 9 0 100-18 9 9 0 000 18z" />
+            </svg>
+        </div>
+        
+        <h2 class="text-center text-4xl font-bold text-gray-800 mb-2">Buat Akun</h2>
+        <p class="text-center text-gray-500 mb-8">Daftar untuk melanjutkan</p>
+
+        <!-- Pesan Status -->
+        <div id="status-message" class="hidden text-center p-4 mb-6 rounded-lg font-semibold transition-all duration-300 transform scale-95 opacity-0"></div>
+
+        <form id="register-form">
+            <div class="mb-5">
+                <label for="name" class="block text-gray-700 font-medium mb-2">Nama Lengkap</label>
+                <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200" placeholder="Nama Lengkap Kamu" required>
+            </div>
+            <div class="mb-5">
+                <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200" placeholder="nama@contoh.com" required>
+            </div>
+            <div class="mb-5">
+                <label for="password" class="block text-gray-700 font-medium mb-2">Kata Sandi</label>
+                <input type="password" id="password" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200" placeholder="••••••••" required>
+            </div>
+            <div class="mb-5">
+                <label for="confirm-password" class="block text-gray-700 font-medium mb-2">Konfirmasi Kata Sandi</label>
+                <input type="password" id="confirm-password" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl">
+                Daftar
+            </button>
+        </form>
+
+        <p class="text-center text-gray-500 mt-8">
+            Sudah punya akun? 
+            <a href="./login.html" class="text-blue-600 hover:underline transition-colors duration-200 font-medium">Masuk di sini</a>
+        </p>
+    </div>
+
+    <script type="module">
+        // Impor modul yang diperlukan dari Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Variabel global untuk ID aplikasi dan konfigurasi Firebase
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(__firebase_config);
+
+        // Inisialisasi Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        document.getElementById('register-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const nameInput = document.getElementById('name').value;
+            const emailInput = document.getElementById('email').value;
+            const passwordInput = document.getElementById('password').value;
+            const confirmPasswordInput = document.getElementById('confirm-password').value;
+            const statusMessage = document.getElementById('status-message');
+
+            if (nameInput && emailInput && passwordInput && confirmPasswordInput) {
+                if (passwordInput !== confirmPasswordInput) {
+                    statusMessage.textContent = 'Kata sandi tidak cocok.';
+                    statusMessage.className = 'text-red-700 bg-red-100 text-center p-4 mb-6 rounded-lg font-semibold transition-all duration-300 transform scale-100 opacity-100';
+                    return;
+                }
+                
+                // Coba untuk otentikasi dengan token atau secara anonim
+                let userId = null;
+                try {
+                    if (typeof __initial_auth_token !== 'undefined') {
+                        const userCredential = await signInWithCustomToken(auth, __initial_auth_token);
+                        userId = userCredential.user.uid;
+                    } else {
+                        const userCredential = await signInAnonymously(auth);
+                        userId = userCredential.user.uid;
+                    }
+                } catch (error) {
+                    console.error("Autentikasi Firebase gagal:", error);
+                    statusMessage.textContent = 'Autentikasi gagal. Silakan coba lagi.';
+                    statusMessage.className = 'text-red-700 bg-red-100 text-center p-4 mb-6 rounded-lg font-semibold transition-all duration-300 transform scale-100 opacity-100';
+                    return;
+                }
+
+                // Path koleksi untuk menyimpan data pengguna
+                const registrationsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/registrations`);
+
+                try {
+                    // Simpan data pendaftaran ke Firestore
+                    await addDoc(registrationsCollectionRef, {
+                        name: nameInput,
+                        email: emailInput,
+                        createdAt: new Date()
+                    });
+
+                    // Tampilkan pesan sukses
+                    statusMessage.textContent = 'Pendaftaran Berhasil! Mengarahkan Anda...';
+                    statusMessage.className = 'text-green-700 bg-green-100 text-center p-4 mb-6 rounded-lg font-semibold transition-all duration-300 transform scale-100 opacity-100';
+
+                    // Redirect ke halaman login.html setelah 1.5 detik
+                    setTimeout(() => {
+                        window.location.href = './login.html';
+                    }, 1500);
+
+                } catch (e) {
+                    console.error("Gagal menambahkan dokumen: ", e);
+                    statusMessage.textContent = 'Pendaftaran gagal. Silakan coba lagi.';
+                    statusMessage.className = 'text-red-700 bg-red-100 text-center p-4 mb-6 rounded-lg font-semibold transition-all duration-300 transform scale-100 opacity-100';
+                }
+            } else {
+                statusMessage.textContent = 'Semua kolom harus diisi.';
+                statusMessage.className = 'text-red-700 bg-red-100 text-center p-4 mb-6 rounded-lg font-semibold transition-all duration-300 transform scale-100 opacity-100';
+            }
+        });
+    </script>
+</body>
+</html>
+ 
